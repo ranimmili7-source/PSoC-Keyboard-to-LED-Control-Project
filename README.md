@@ -46,7 +46,7 @@ Registre PRTXDR
 
 -Carte de développement avec LEDs D9-D16
 
-- psoc design
+-psoc design
   
   # Auteur
 
