@@ -1,0 +1,437 @@
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile ./main.c
+ 0000                   .dbfile C:\Users\21699\DOCUME~1\PSOCDE~1.4PR\TP2psoc\TP2psoc\TP2psoc\main.c
+ 0000                   .dbfunc e main _main fV
+ 0000           ;           cols -> X+2
+ 0000           ;           rows -> X+1
+ 0000           ;            var -> X+0
+ 0000           _main::
+ 0000                   .dbline -1
+ 0000 10                push X
+ 0001 4F                mov X,SP
+ 0002 3805              add SP,5
+ 0004                   .dbline 11
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; // C main line
+ 0004           ; //----------------------------------------------------------------------------
+ 0004           ; 
+ 0004           ; #include <m8c.h>        // part specific constants and macros
+ 0004           ; #include "PSoCAPI.h"    // PSoC API definitions for all User Modules
+ 0004           ; 
+ 0004           ; 
+ 0004           ; 
+ 0004           ; void main(void)
+ 0004           ; {
+ 0004                   .dbline 15
+ 0004           ;       unsigned char  var;
+ 0004           ;       
+ 0004           ;       unsigned char rows, cols;
+ 0004           ;       LED_1_Start();
+ 0004 10                push X
+ 0005 7C0000            xcall _LED_1_Start
+ 0008                   .dbline 16
+ 0008           ;     LED_2_Start();
+ 0008 7C0000            xcall _LED_2_Start
+ 000B                   .dbline 17
+ 000B           ;     LED_3_Start();
+ 000B 7C0000            xcall _LED_3_Start
+ 000E                   .dbline 18
+ 000E           ;     LED_4_Start();
+ 000E 7C0000            xcall _LED_4_Start
+ 0011                   .dbline 19
+ 0011           ;     LED_5_Start();
+ 0011 7C0000            xcall _LED_5_Start
+ 0014                   .dbline 20
+ 0014           ;     LED_6_Start();
+ 0014 7C0000            xcall _LED_6_Start
+ 0017                   .dbline 21
+ 0017           ;     LED_7_Start();
+ 0017 7C0000            xcall _LED_7_Start
+ 001A                   .dbline 22
+ 001A           ;     LED_8_Start();
+ 001A 7C0000            xcall _LED_8_Start
+ 001D 20                pop X
+ 001E 8152              xjmp L3
+ 0020           L2:
+ 0020                   .dbline 25
+ 0020           ;       
+ 0020           ;       
+ 0020           ;       while (1){
+ 0020                   .dbline 26
+ 0020           ;       PRT4DR=0x0F;
+ 0020 62100F            mov REG[0x10],15
+ 0023                   .dbline 27
+ 0023           ;         rows=PRT4DR;
+ 0023 5D10              mov A,REG[0x10]
+ 0025 5401              mov [X+1],A
+ 0027                   .dbline 30
+ 0027           ;       
+ 0027           ;       
+ 0027           ;       PRT4DR=0xF0;
+ 0027 6210F0            mov REG[0x10],-16
+ 002A                   .dbline 31
+ 002A           ;         cols=PRT4DR;
+ 002A 5D10              mov A,REG[0x10]
+ 002C 5402              mov [X+2],A
+ 002E                   .dbline 33
+ 002E           ;       
+ 002E           ;       var=rows & cols;
+ 002E 5201              mov A,[X+1]
+ 0030 2302              and A,[X+2]
+ 0032 5400              mov [X+0],A
+ 0034                   .dbline 46
+ 0034           ;       
+ 0034           ;       //if (var==0x18){
+ 0034           ;               
+ 0034           ;               
+ 0034           ;               //LED_1_Switch(1);
+ 0034           ;       
+ 0034           ;       //} else if (var==0x14){
+ 0034           ;        //     LED_1_Switch(0); 
+ 0034           ;         //}
+ 0034           ;       
+ 0034           ;       
+ 0034           ;       
+ 0034           ;               switch (var) {
+ 0034 5200              mov A,[X+0]
+ 0036 5404              mov [X+4],A
+ 0038 560300            mov [X+3],0
+ 003B 3D0300            cmp [X+3],0
+ 003E B006              jnz X1
+ 0040 3D0421            cmp [X+4],33
+ 0043 A0EE              jz L15
+ 0045           X1:
+ 0045 3D0300            cmp [X+3],0
+ 0048 B006              jnz X2
+ 004A 3D0422            cmp [X+4],34
+ 004D A0DB              jz L14
+ 004F           X2:
+ 004F 3D0300            cmp [X+3],0
+ 0052 B006              jnz X3
+ 0054 3D0424            cmp [X+4],36
+ 0057 A0C8              jz L13
+ 0059           X3:
+ 0059 5204              mov A,[X+4]
+ 005B 1128              sub A,40
+ 005D 5300              mov [__rY],A
+ 005F 5203              mov A,[X+3]
+ 0061 3180              xor A,-128
+ 0063 1980              sbb A,(0 ^ 0x80)
+ 0065 2A00              or A,[__rY]
+ 0067 A0AF              jz L12
+ 0069 D02B              jnc L25
+ 006B           X4:
+ 006B           L24:
+ 006B 3D0300            cmp [X+3],0
+ 006E B006              jnz X5
+ 0070 3D0411            cmp [X+4],17
+ 0073 A09A              jz L11
+ 0075           X5:
+ 0075 3D0300            cmp [X+3],0
+ 0078 B006              jnz X6
+ 007A 3D0412            cmp [X+4],18
+ 007D A087              jz L10
+ 007F           X6:
+ 007F 3D0300            cmp [X+3],0
+ 0082 B006              jnz X7
+ 0084 3D0414            cmp [X+4],20
+ 0087 A074              jz L9
+ 0089           X7:
+ 0089 3D0300            cmp [X+3],0
+ 008C B006              jnz X8
+ 008E 3D0418            cmp [X+4],24
+ 0091 A061              jz L8
+ 0093           X8:
+ 0093 80DD              xjmp L5
+ 0095           L25:
+ 0095 3D0300            cmp [X+3],0
+ 0098 B006              jnz X9
+ 009A 3D0441            cmp [X+4],65
+ 009D A0B2              jz L19
+ 009F           X9:
+ 009F 3D0300            cmp [X+3],0
+ 00A2 B006              jnz X10
+ 00A4 3D0442            cmp [X+4],66
+ 00A7 A0A1              jz L18
+ 00A9           X10:
+ 00A9 3D0300            cmp [X+3],0
+ 00AC B006              jnz X11
+ 00AE 3D0444            cmp [X+4],68
+ 00B1 A090              jz L17
+ 00B3           X11:
+ 00B3 3D0300            cmp [X+3],0
+ 00B6 B006              jnz X12
+ 00B8 3D0448            cmp [X+4],72
+ 00BB A07F              jz L16
+ 00BD           X12:
+ 00BD 5204              mov A,[X+4]
+ 00BF 1141              sub A,65
+ 00C1 5203              mov A,[X+3]
+ 00C3 3180              xor A,-128
+ 00C5 1980              sbb A,(0 ^ 0x80)
+ 00C7 C0A9              jc L5
+ 00C9           X13:
+ 00C9           L26:
+ 00C9 3D0300            cmp [X+3],0
+ 00CC B006              jnz X14
+ 00CE 3D0481            cmp [X+4],-127
+ 00D1 A09A              jz L23
+ 00D3           X14:
+ 00D3 3D0300            cmp [X+3],0
+ 00D6 B006              jnz X15
+ 00D8 3D0482            cmp [X+4],-126
+ 00DB A089              jz L22
+ 00DD           X15:
+ 00DD 3D0300            cmp [X+3],0
+ 00E0 B006              jnz X16
+ 00E2 3D0484            cmp [X+4],-124
+ 00E5 A078              jz L21
+ 00E7           X16:
+ 00E7 3D0300            cmp [X+3],0
+ 00EA B006              jnz X17
+ 00EC 3D0488            cmp [X+4],-120
+ 00EF A067              jz L20
+ 00F1           X17:
+ 00F1 807F              xjmp L5
+ 00F3           L8:
+ 00F3                   .dbline 48
+ 00F3           ;                       case 0x18:
+ 00F3           ;                               LED_1_Switch(1);
+ 00F3 10                push X
+ 00F4 5001              mov A,1
+ 00F6 7C0000            xcall _LED_1_Switch
+ 00F9 20                pop X
+ 00FA                   .dbline 50
+ 00FA           ;         
+ 00FA           ;                        break;
+ 00FA 8076              xjmp L6
+ 00FC           L9:
+ 00FC                   .dbline 52
+ 00FC           ;     case 0x14:
+ 00FC           ;         LED_2_Switch(1);
+ 00FC 10                push X
+ 00FD 5001              mov A,1
+ 00FF 7C0000            xcall _LED_2_Switch
+ 0102 20                pop X
+ 0103                   .dbline 54
+ 0103           ;         
+ 0103           ;                        break;
+ 0103 806D              xjmp L6
+ 0105           L10:
+ 0105                   .dbline 59
+ 0105           ;         
+ 0105           ;                               
+ 0105           ;                               
+ 0105           ;                               case 0x12:
+ 0105           ;                               LED_3_Switch(1);
+ 0105 10                push X
+ 0106 5001              mov A,1
+ 0108 7C0000            xcall _LED_3_Switch
+ 010B 20                pop X
+ 010C                   .dbline 61
+ 010C           ;         
+ 010C           ;                        break;
+ 010C 8064              xjmp L6
+ 010E           L11:
+ 010E                   .dbline 63
+ 010E           ;                               case 0x11:
+ 010E           ;                               LED_4_Switch(1);
+ 010E 10                push X
+ 010F 5001              mov A,1
+ 0111 7C0000            xcall _LED_4_Switch
+ 0114 20                pop X
+ 0115                   .dbline 65
+ 0115           ;         
+ 0115           ;                        break;
+ 0115 805B              xjmp L6
+ 0117           L12:
+ 0117                   .dbline 69
+ 0117           ;                               
+ 0117           ;                               case 0x28:
+ 0117           ;                               
+ 0117           ;                               LED_5_Switch(1);
+ 0117 10                push X
+ 0118 5001              mov A,1
+ 011A 7C0000            xcall _LED_5_Switch
+ 011D 20                pop X
+ 011E                   .dbline 71
+ 011E           ;         
+ 011E           ;                        break;
+ 011E 8052              xjmp L6
+ 0120           L13:
+ 0120                   .dbline 74
+ 0120           ;                               case 0x24:
+ 0120           ;                               
+ 0120           ;                               LED_6_Switch(1);
+ 0120 10                push X
+ 0121 5001              mov A,1
+ 0123 7C0000            xcall _LED_6_Switch
+ 0126 20                pop X
+ 0127                   .dbline 76
+ 0127           ;         
+ 0127           ;                        break;
+ 0127 8049              xjmp L6
+ 0129           L14:
+ 0129                   .dbline 78
+ 0129           ;                               case 0x22:
+ 0129           ;                               LED_7_Switch(1);
+ 0129 10                push X
+ 012A 5001              mov A,1
+ 012C 7C0000            xcall _LED_7_Switch
+ 012F 20                pop X
+ 0130                   .dbline 80
+ 0130           ;         
+ 0130           ;                        break;
+ 0130 8040              xjmp L6
+ 0132           L15:
+ 0132                   .dbline 83
+ 0132           ;                               
+ 0132           ;                               case 0x21:
+ 0132           ;     LED_8_Switch(1);
+ 0132 10                push X
+ 0133 5001              mov A,1
+ 0135 7C0000            xcall _LED_8_Switch
+ 0138 20                pop X
+ 0139                   .dbline 85
+ 0139           ;         
+ 0139           ;                        break;
+ 0139 8037              xjmp L6
+ 013B           L16:
+ 013B                   .dbline 104
+ 013B           ;                               
+ 013B           ;                               
+ 013B           ;                               
+ 013B           ;                               //éteindre
+ 013B           ;                               
+ 013B           ;                               
+ 013B           ;                               
+ 013B           ;                               
+ 013B           ;                               
+ 013B           ;                               
+ 013B           ;                               
+ 013B           ;                               
+ 013B           ;                               
+ 013B           ;                               
+ 013B           ;       
+ 013B           ;       
+ 013B           ;               
+ 013B           ;                       case 0x48:
+ 013B           ;                               LED_1_Invert();
+ 013B 10                push X
+ 013C 7C0000            xcall _LED_1_Invert
+ 013F 20                pop X
+ 0140                   .dbline 106
+ 0140           ;         
+ 0140           ;                        break;
+ 0140 8030              xjmp L6
+ 0142           L17:
+ 0142                   .dbline 108
+ 0142           ;     case 0x44:
+ 0142           ;        LED_2_Invert();
+ 0142 10                push X
+ 0143 7C0000            xcall _LED_2_Invert
+ 0146 20                pop X
+ 0147                   .dbline 110
+ 0147           ;         
+ 0147           ;                        break;
+ 0147 8029              xjmp L6
+ 0149           L18:
+ 0149                   .dbline 115
+ 0149           ;         
+ 0149           ;                               
+ 0149           ;                               
+ 0149           ;                               case 0x42:
+ 0149           ;                               LED_3_Invert();
+ 0149 10                push X
+ 014A 7C0000            xcall _LED_3_Invert
+ 014D 20                pop X
+ 014E                   .dbline 117
+ 014E           ;         
+ 014E           ;                        break;
+ 014E 8022              xjmp L6
+ 0150           L19:
+ 0150                   .dbline 119
+ 0150           ;                               case 0x41:
+ 0150           ;                               LED_4_Invert();
+ 0150 10                push X
+ 0151 7C0000            xcall _LED_4_Invert
+ 0154 20                pop X
+ 0155                   .dbline 120
+ 0155           ;                        break;
+ 0155 801B              xjmp L6
+ 0157           L20:
+ 0157                   .dbline 124
+ 0157           ;                               
+ 0157           ;                               case 0x88:
+ 0157           ;                               
+ 0157           ;                               LED_5_Invert();
+ 0157 10                push X
+ 0158 7C0000            xcall _LED_5_Invert
+ 015B 20                pop X
+ 015C                   .dbline 126
+ 015C           ;         
+ 015C           ;                        break;
+ 015C 8014              xjmp L6
+ 015E           L21:
+ 015E                   .dbline 129
+ 015E           ;                               case 0x84:
+ 015E           ;                               
+ 015E           ;                               LED_6_Invert();
+ 015E 10                push X
+ 015F 7C0000            xcall _LED_6_Invert
+ 0162 20                pop X
+ 0163                   .dbline 131
+ 0163           ;         
+ 0163           ;                        break;
+ 0163 800D              xjmp L6
+ 0165           L22:
+ 0165                   .dbline 133
+ 0165           ;                               case 0x82:
+ 0165           ;                               LED_7_Invert();
+ 0165 10                push X
+ 0166 7C0000            xcall _LED_7_Invert
+ 0169 20                pop X
+ 016A                   .dbline 135
+ 016A           ;         
+ 016A           ;                        break;
+ 016A 8006              xjmp L6
+ 016C           L23:
+ 016C                   .dbline 138
+ 016C           ;                               
+ 016C           ;                               case 0x81:
+ 016C           ;                               LED_8_Invert();
+ 016C 10                push X
+ 016D 7C0000            xcall _LED_8_Invert
+ 0170 20                pop X
+ 0171                   .dbline 141
+ 0171           ;    
+ 0171           ;         
+ 0171           ;                        break;
+ 0171           L5:
+ 0171           L6:
+ 0171                   .dbline 151
+ 0171           ;                               
+ 0171           ;                               
+ 0171           ;  
+ 0171           ;                               
+ 0171           ;                               
+ 0171           ;                               
+ 0171           ;                               
+ 0171           ;         
+ 0171           ; }
+ 0171           ; } }
+ 0171           L3:
+ 0171                   .dbline 25
+ 0171 8EAE              xjmp L2
+ 0173           X0:
+ 0173                   .dbline -2
+ 0173           L1:
+ 0173 38FB              add SP,-5
+ 0175 20                pop X
+ 0176                   .dbline 0 ; func end
+ 0176 8FFF              jmp .
+ 0178                   .dbsym l cols 2 c
+ 0178                   .dbsym l rows 1 c
+ 0178                   .dbsym l var 0 c
+ 0178                   .dbend
